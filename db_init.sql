@@ -81,12 +81,29 @@ create table SalesDetails (
     foreign key (ItemID) references ItemsAndPrices(ItemID)
 );
 
-
-
-
-
-
-
-
-
-
+-- SalesReport view
+create view SalesReport as
+select
+    st.TransactionID as transaction_id,
+    s.StoreName as store_name,
+    r.RegionName as region_name,
+    i.ItemName as item_name,
+    sd.QuantitySold as quantity_sold,
+    i.BasePrice as base_price,
+    COALESCE(pm.PriceModifier, 0) as price_modifier,
+    (i.BasePrice + (i.BasePrice * COALESCE(pm.PriceModifier, 0) / 100)) as modified_price_per_item,
+    ((i.BasePrice + (i.BasePrice * COALESCE(pm.PriceModifier, 0) / 100)) * sd.QuantitySold) as total_sale
+from
+    SalesTransactions st
+join 
+    Stores s on st.StoreID = s.StoreID
+join
+    Region r on s.RegionID = r.RegionID
+join
+    SalesDetails sd on st.TransactionID = sd.TransactionID
+join
+    ItemsAndPrices i on sd.ItemID = i.ItemID
+left join
+    PriceModifier pm on r.RegionID = pm.RegionID and st.TransactionDate >= pm.EffectiveDate
+order by 
+    st.TransactionDate;
