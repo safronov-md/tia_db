@@ -1,8 +1,8 @@
 FROM postgres:latest
 
-COPY init.sh /docker-entrypoint-initdb.d/init.sh
-COPY db_init.sql /docker-entrypoint-initdb.d/1_init.sql
-COPY mock_insert.sql /docker-entrypoint-initdb.d/2_mock_insert.sql
+COPY db_init/init.sh /docker-entrypoint-initdb.d/init.sh
+COPY db_init/db_init.sql /docker-entrypoint-initdb.d/1_init.sql
+COPY db_init/mock_insert.sql /docker-entrypoint-initdb.d/2_mock_insert.sql
 
 RUN chmod +x /docker-entrypoint-initdb.d/init.sh
 

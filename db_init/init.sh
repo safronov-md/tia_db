@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Wait for the PostgreSQL server to start
-until pg_isready -h postgres -p 5432 -U admin -d TIA
+until pg_isready -h postgres_container -p 5432 -U admin -d TIA
 do
   echo "Waiting for PostgreSQL to start..."
   sleep 1
