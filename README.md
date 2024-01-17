@@ -5,9 +5,10 @@
 
 ## Specs:
 * DB port - 5432
-* * DB - TIA
-* * username - admin
-* * password - admin
+  * server (address) - postgres_container
+  * DB - TIA
+  * username - admin
+  * password - admin
 * pgAdmin4 address - http://localhost:5050/
 * * email - admin@razdolbai.select
 * * password - admin
